@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">TestRetrofit2</string>
+    <string name="app_name">Retrofit-Att</string>
+
+
+
+<string-array name="format_options">
+    <item>application/json</item>
+    <item>application/xml</item>
+</string-array>
 </resources>

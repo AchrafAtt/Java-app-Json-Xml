@@ -28,6 +28,7 @@
 
         <!-- AddCompteActivity Declaration -->
         <activity android:name=".AddCompteActivity" />
+        <activity android:name=".EditCompteActivity"/>
     </application>
 
 </manifest>

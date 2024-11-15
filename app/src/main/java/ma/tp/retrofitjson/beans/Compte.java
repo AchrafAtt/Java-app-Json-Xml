@@ -1,8 +1,9 @@
 package ma.tp.retrofitjson.beans;
 
-import java.util.Date;
 
-public class Compte {
+import java.io.Serializable;
+
+public class Compte  implements Serializable {
     private Integer id;
     private double solde;
     private String dateCreation;
@@ -50,3 +51,4 @@ public class Compte {
                 '}';
     }
 }
+

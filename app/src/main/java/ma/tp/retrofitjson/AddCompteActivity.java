@@ -1,5 +1,6 @@
 package ma.tp.retrofitjson;
 
+
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,19 +13,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import ma.tp.retrofitjson.beans.Compte;
 import ma.tp.retrofitjson.api.ApiInterface;
+import ma.tp.retrofitjson.beans.Compte;
 import ma.tp.retrofitjson.config.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
-
 public class AddCompteActivity extends AppCompatActivity {
     private EditText etSolde;
     private Button btnSave;
     private Spinner spinnerType;
+    private String selectedFormat; // Variable to hold the selected format
     private static final String TAG = "AddCompteActivity";
 
     @Override
@@ -36,12 +35,14 @@ public class AddCompteActivity extends AppCompatActivity {
         spinnerType = findViewById(R.id.spinnerType);
         btnSave = findViewById(R.id.btnSave);
 
-        // Set up the Spinner with the types COURANT and EPARGNE
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
+        // Get the selected format passed from MainActivity
+        selectedFormat = getIntent().getStringExtra("selectedFormat");
+
+        // Set up the Spinner with types COURANT and EPARGNE
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 new String[]{"COURANT", "EPARGNE"});
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerType.setAdapter(adapter);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(adapterType);
 
         btnSave.setOnClickListener(view -> createCompte());
     }
@@ -65,8 +66,8 @@ public class AddCompteActivity extends AppCompatActivity {
         compte.setType(selectedType);
         compte.setDateCreation(todayDate);
 
-        // Call the API to create a new Compte
-        ApiInterface apiService = RetrofitClient.getApi();
+        // Call the API to create a new Compte with the selected format
+        ApiInterface apiService = RetrofitClient.getApi(selectedFormat); // Use the selected format (JSON or XML)
         apiService.createCompte(compte).enqueue(new Callback<Compte>() {
             @Override
             public void onResponse(Call<Compte> call, Response<Compte> response) {
@@ -85,3 +86,4 @@ public class AddCompteActivity extends AppCompatActivity {
         });
     }
 }
+
